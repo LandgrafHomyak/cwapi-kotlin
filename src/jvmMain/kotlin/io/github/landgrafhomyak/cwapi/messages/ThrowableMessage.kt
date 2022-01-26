@@ -1,6 +1,5 @@
 package io.github.landgrafhomyak.cwapi.messages
 
-
-sealed class ErrorMessage constructor(message: String) : Throwable(message), Message.Server2Client {
+actual open class ThrowableMessage internal actual constructor(message: String) : Throwable() {
     override fun fillInStackTrace(): Throwable = this
 }
