@@ -21,7 +21,7 @@ open class Task : DefaultTask() {
     lateinit var errorMessageBaseClass: String
 
     @get:Input
-    internal lateinit var classesToGenerate: List<MessageInfo>
+    internal lateinit var classesToGenerate: List<MessageScopeBuilder>
 
     @TaskAction
     fun invoke() {
@@ -66,14 +66,14 @@ open class Task : DefaultTask() {
             builder.appendLine("package " + this.packageName)
             builder.appendLine()
             builder.append("class " + classInfo.className)
-            if (classInfo.internalConstructor) {
-                builder.append(" internal constructor")
-            }
+//            if (classInfo.internalConstructor) {
+//                builder.append(" internal constructor")
+//            }
             builder.appendLine("(")
-            classInfo.scope.fields.forEach { (name, info) ->
+            classInfo.fields.forEach { (name, info) ->
                 builder.appendLine("   var $name: ${info.second},")
             }
-//            classInfo.scope.children.forEach {name, info ->
+//            classInfo.children.forEach {name, info ->
 //                builder.appendLine("    var $name: ${info.}")
 //            }
             builder.append(") : ")
@@ -87,9 +87,12 @@ open class Task : DefaultTask() {
                     builder.append(this.messageInterface)
                 }
             }
+            builder.appendLine(" {")
+            builder.appendLine("    override fun dump() = \"\"")
+            builder.appendLine("}")
             return@map classInfo.className to builder.toString()
         }.forEach { (className, generatedSourceCode) ->
-            val file = destinationFolder.resolve(className + ".kt")
+            val file = destinationFolder.resolve("$className.kt")
             if (!file.exists()) {
                 file.createNewFile()
             }

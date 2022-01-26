@@ -4,4 +4,6 @@ enum class FieldType {
     Number,
     String,
     Enum,
+    Module,
+    Boolean
 }
