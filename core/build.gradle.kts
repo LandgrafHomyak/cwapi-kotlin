@@ -1,20 +1,18 @@
 plugins {
     kotlin("multiplatform") version "1.6.10"
+    idea
 }
 
 repositories {
     mavenCentral()
 }
 
-version = "2!2020.01.27a0"
-
-
 kotlin {
     jvm {
         compilations.all {
             kotlinOptions.jvmTarget = "1.8"
         }
-//        withJava()
+
         testRuns["test"].executionTask.configure {
             useJUnitPlatform()
         }
@@ -46,3 +44,9 @@ kotlin {
         val nativeTest by getting
     }
 }
+
+artifacts {
+    add("out", tasks["jvmJar"])
+}
+
+

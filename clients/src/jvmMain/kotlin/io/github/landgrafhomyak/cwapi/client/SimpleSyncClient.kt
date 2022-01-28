@@ -3,6 +3,8 @@ package io.github.landgrafhomyak.cwapi.client
 import com.rabbitmq.client.Channel
 import com.rabbitmq.client.Connection
 import com.rabbitmq.client.ConnectionFactory
+import io.github.landgrafhomyak.cwapi.messages.GetInfoRequest
+import io.github.landgrafhomyak.cwapi.messages.GetInfoResponse
 import io.github.landgrafhomyak.cwapi.messages.Message
 
 open class SimpleSyncClient(
@@ -64,11 +66,8 @@ open class SimpleSyncClient(
                 null,
                 request.toJson().toByteArray()
             )
-
-            channel.basicConsume(this.inputQueueName) {
-
-            }
         }
+        return GetInfoResponse(0)
     }
 
     override fun isConnected(): Boolean = this.connectionAndChannel != null

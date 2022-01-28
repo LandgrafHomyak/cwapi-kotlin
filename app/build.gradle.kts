@@ -13,7 +13,7 @@ kotlin {
         compilations.all {
             kotlinOptions.jvmTarget = "1.8"
         }
-//        withJava()
+        withJava()
         testRuns["test"].executionTask.configure {
             useJUnitPlatform()
         }
@@ -48,4 +48,9 @@ kotlin {
         val nativeMain by getting
         val nativeTest by getting
     }
+}
+
+
+artifacts {
+    add("out", tasks["jvmJar"])
 }
