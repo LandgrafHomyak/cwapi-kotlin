@@ -1,2 +1,4 @@
-rootProject.name = "cwapi-kt"
-//include("message-generator")
+rootProject.name = "cwapi"
+include("core")
+include("client-api")
+include("client-app")
